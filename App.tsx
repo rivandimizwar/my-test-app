@@ -1,31 +1,33 @@
-/**
- * Custom App - Hello World
- */
+// App.tsx
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import React from 'react';
-import { SafeAreaView, Text, StyleSheet, StatusBar, useColorScheme } from 'react-native';
+// Impor komponen Anda
+import BottomTabs from './BottomTabs';
+import DetailContact from './screen/DetailContact';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+// Buat Stack Navigator
+const Stack = createNativeStackNavigator();
 
+export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Text style={styles.text}>Hello World dari Rivandi 🚀</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/* Layar 1: Bottom Tabs Anda */}
+        <Stack.Screen 
+          name="MainTabs" // Beri nama untuk grup tab Anda
+          component={BottomTabs}
+          options={{ headerShown: false }} // Sembunyikan header stack di layar tab
+        />
+
+        {/* Layar 2: Layar Detail Contact */}
+        <Stack.Screen 
+          name="DetailContact" // Nama ini HARUS SAMA dengan yang di navigation.navigate()
+          component={DetailContact}
+          options={{ headerShown: false }} // Header-nya sudah ada di dalam file DetailContactScreen
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 22,
-    fontWeight: '600',
-  },
-});
-
-export default App;
